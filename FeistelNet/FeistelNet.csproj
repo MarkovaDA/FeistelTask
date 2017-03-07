@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="FeistelNetClassV1.cs" />
     <Compile Include="FeistelNetClassV2.cs" />
+    <Compile Include="FeistelNetClassV3.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

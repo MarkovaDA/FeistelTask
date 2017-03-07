@@ -8,11 +8,11 @@ namespace FeistelNet
 {
     class FeistelNetClassV2
     {
-        private const int BLOCK_SIZE = 4;
-        private const UInt16 SECRET = 65535;
-        private const int ROUNDS = 5;
+        public  const int BLOCK_SIZE = 4;
+        public  const UInt16 SECRET = 65535;
+        public  const  int ROUNDS = 5;
 
-        //шифрация каждог блока данных
+        //шифрация каждого блока данных
         public static uint[] FeistelEncrypt(uint[] plainText)
         {
             var cipherBlocks = new uint[plainText.Count()];
@@ -68,7 +68,7 @@ namespace FeistelNet
 
         //функция дешифрации данных
         public static uint decryptBlock(uint originalBlock)
-        {
+        {   
             var bytes = GetBytes(originalBlock);
             //выделение левого блока
             UInt16 leftPart = ToUInt16(bytes.Take(2).ToArray());
@@ -121,7 +121,7 @@ namespace FeistelNet
             return result;
         }
 
-        //выделение из строки блока данных
+        //разбитие строки на блоки данных
         public static uint[] GetBlocks(string text)
         {
             var bytes = Encoding.ASCII.GetBytes(text);
