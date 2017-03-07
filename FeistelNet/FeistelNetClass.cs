@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FeistelNet
 {
-    class FeistelNetClassV3
+    class FeistelNetClass
     {
         private const int BLOCK_SIZE = 8;//8 байт = 64 бита
         private const int ROUNDS = 5;
@@ -54,6 +54,7 @@ namespace FeistelNet
                     rightPart = result;
                 }
             }
+           
             //слитие закодированных 32-битных блоков назад в 64-битных блок
             var cipherBytes = new byte[8]
         	{
@@ -113,7 +114,7 @@ namespace FeistelNet
             UInt64 result = 0;
             for (int i = 0; i < 8; i++)
             {
-                result += (UInt64)Math.Pow(256, 8 - i) * bytes[i];
+                result += (UInt64)Math.Pow(256, 7 - i) * bytes[i];
             }
             return result;
         }
