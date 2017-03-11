@@ -16,7 +16,12 @@ namespace FeistelNet
             uint[] resultEncrypted = FeistelNetClassV2.FeistelEncrypt(blocks);
             String cipherText = 
                 Encoding.ASCII.GetString(resultEncrypted.SelectMany(r => BitConverter.GetBytes(r).Reverse()).ToArray());
+<<<<<<< Updated upstream
             uint[] resultDecrypted = FeistelNetClassV2.FeistelDecrypt(resultEncrypted);
+=======
+            Console.WriteLine("Зашифрованный текст: {0}", cipherText);            
+            UInt64[] resultDecrypted = FeistelNetClass.FeistelDecrypt(resultEncrypted);
+>>>>>>> Stashed changes
             String plainText = 
                 Encoding.ASCII.GetString(resultDecrypted.SelectMany(r => BitConverter.GetBytes(r).Reverse()).ToArray());
             Console.Write(plainText);
