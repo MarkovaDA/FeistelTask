@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace FeistelNet
 {
     class FeistelNetClass
-    {   //КЛЮЧ 64 БИТА, ИСПОЛЬЗУЮТСЯ ТОЛЬКО 32 БИТА, БЛОКИ по 16 бит (Продумать размеры блоков по 32 бита)
+    {   
         private const int BLOCK_SIZE = 8;//8 байт = 64 бита
         private const int ROUNDS = 5;
         private const UInt64 startKey = 12345;//начальный 64-битовый ключ
@@ -63,25 +63,11 @@ namespace FeistelNet
                     fourPart ^= f;
                 }
             }
-            //в leftPart сливаем onePart и twoPart
-            //в rightPart сливаем threePart и fourPart
-            var leftPartBytes = new byte[4]{
-                BitConverter.GetBytes(onePart)[1], BitConverter.GetBytes(onePart)[0],
-                BitConverter.GetBytes(twoPart)[1], BitConverter.GetBytes(twoPart)[0]
-            };
-            leftPart = ToUInt32(leftPartBytes);
-            var rightPartBytes = new byte[4]{
-                BitConverter.GetBytes(threePart)[1], BitConverter.GetBytes(threePart)[0],
-                BitConverter.GetBytes(fourPart)[1], BitConverter.GetBytes(fourPart)[0]
-            };
-            rightPart = ToUInt32(rightPartBytes);
-            //слитие закодированных 32-битных блоков назад в 64-битных блок
-            var cipherBytes = new byte[8]
-        	{
-            	BitConverter.GetBytes(leftPart)[3], BitConverter.GetBytes(leftPart)[2], BitConverter.GetBytes(leftPart)[1], BitConverter.GetBytes(leftPart)[0],
-				BitConverter.GetBytes(rightPart)[3], BitConverter.GetBytes(rightPart)[2], BitConverter.GetBytes(rightPart)[1], BitConverter.GetBytes(rightPart)[0]
-			};
-            return ToUInt64(cipherBytes);
+            //сливаем блоки по 16 бит в два блока по 32
+            UInt32 left32 = unionUint16_Blocks(onePart, twoPart);
+            //затем сливаем блоки по 32 в единый блок 64 бита
+            UInt32 right32 = unionUint16_Blocks(threePart, fourPart);
+            return unionUint32_Blocks(left32, right32);
         }
         //объединение блоков длиною 16 бит в один блок 32 бита
         private static UInt32 unionUint16_Blocks(UInt16 left, UInt16 right)
@@ -148,29 +134,23 @@ namespace FeistelNet
                     fourPart ^= f;
                 }
             }
-            var leftPartBytes = new byte[4]{
-                BitConverter.GetBytes(onePart)[1], BitConverter.GetBytes(onePart)[0],
-                BitConverter.GetBytes(twoPart)[1], BitConverter.GetBytes(twoPart)[0]
-            };
-            leftPart = ToUInt32(leftPartBytes);
-            var rightPartBytes = new byte[4]{
-                BitConverter.GetBytes(threePart)[1], BitConverter.GetBytes(threePart)[0],
-                BitConverter.GetBytes(fourPart)[1], BitConverter.GetBytes(fourPart)[0]
-            };
-            rightPart = ToUInt32(rightPartBytes);
-            //слитие закодированных 32-битных блоков назад в 64-битных блок
-            var cipherBytes = new byte[8]
-        	{
-            	BitConverter.GetBytes(leftPart)[3], BitConverter.GetBytes(leftPart)[2], BitConverter.GetBytes(leftPart)[1], BitConverter.GetBytes(leftPart)[0],
-				BitConverter.GetBytes(rightPart)[3], BitConverter.GetBytes(rightPart)[2], BitConverter.GetBytes(rightPart)[1], BitConverter.GetBytes(rightPart)[0]
-			};
-            return ToUInt64(cipherBytes);
+            UInt32 left32 = unionUint16_Blocks(onePart, twoPart);
+            UInt32 right32 = unionUint16_Blocks(threePart, fourPart);
+            return unionUint32_Blocks(left32, right32);
         }
 
         //разбитие строки на блоки данных длиною в 64 бит
         public static UInt64[] GetBlocks(string text)
-        {
+        {   
             var bytes = Encoding.ASCII.GetBytes(text);
+            //дополнение массива байт, если их число не кратное
+            int diff = text.Length % 8;
+            if (diff != 0)
+            {
+                byte[] temp = new byte[text.Length + (8 - diff)];
+                Array.Copy(bytes, temp, bytes.Length);
+                bytes = temp;
+            }
             var blocksCount = (int)Math.Ceiling(bytes.Count() / (double)BLOCK_SIZE);
             var result = new UInt64[blocksCount];
             for (int i = 0; i < blocksCount; i++)
