@@ -4,3 +4,9 @@ C:\Users\803581\documents\visual studio 2012\Projects\FeistelNet\FeistelNet\bin\
 C:\Users\803581\documents\visual studio 2012\Projects\FeistelNet\FeistelNet\obj\Debug\FeistelNet.csprojResolveAssemblyReference.cache
 C:\Users\803581\documents\visual studio 2012\Projects\FeistelNet\FeistelNet\obj\Debug\FeistelNet.exe
 C:\Users\803581\documents\visual studio 2012\Projects\FeistelNet\FeistelNet\obj\Debug\FeistelNet.pdb
+C:\Users\803581\Documents\Visual Studio 2012\Projects\FeistelTask\FeistelNet\bin\Debug\FeistelNet.exe.config
+C:\Users\803581\Documents\Visual Studio 2012\Projects\FeistelTask\FeistelNet\obj\Debug\FeistelNet.exe
+C:\Users\803581\Documents\Visual Studio 2012\Projects\FeistelTask\FeistelNet\obj\Debug\FeistelNet.pdb
+C:\Users\803581\Documents\Visual Studio 2012\Projects\FeistelTask\FeistelNet\bin\Debug\FeistelNet.exe
+C:\Users\803581\Documents\Visual Studio 2012\Projects\FeistelTask\FeistelNet\bin\Debug\FeistelNet.pdb
+C:\Users\803581\Documents\Visual Studio 2012\Projects\FeistelTask\FeistelNet\obj\Debug\FeistelNet.csprojResolveAssemblyReference.cache

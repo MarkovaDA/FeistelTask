@@ -11,15 +11,18 @@ namespace FeistelNet
     {
         static void Main(string[] args)
         {
-            String text ="darya_markova123";
-            uint[] blocks = FeistelNetClassV2.GetBlocks(text);
-            uint[] resultEncrypted = FeistelNetClassV2.FeistelEncrypt(blocks);
-            String cipherText = 
+            String text = "darya_markova123encoding";
+            UInt64[] blocks = FeistelNetClass.GetBlocks(text);
+            UInt64[] resultEncrypted = FeistelNetClass.FeistelEncrypt(blocks);
+            //зашифрованный текст
+            String cipherText =
                 Encoding.ASCII.GetString(resultEncrypted.SelectMany(r => BitConverter.GetBytes(r).Reverse()).ToArray());
-            uint[] resultDecrypted = FeistelNetClassV2.FeistelDecrypt(resultEncrypted);
-            String plainText = 
+            Console.WriteLine("Зашифрованный текст: {0}", cipherText);
+
+            UInt64[] resultDecrypted = FeistelNetClass.FeistelDecrypt(resultEncrypted);
+            String plainText =
                 Encoding.ASCII.GetString(resultDecrypted.SelectMany(r => BitConverter.GetBytes(r).Reverse()).ToArray());
-            Console.Write(plainText);
+            Console.Write("Расшифрованный текст: {0}", plainText);
             Console.ReadKey();
         }
     }
